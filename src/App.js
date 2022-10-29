@@ -14,11 +14,7 @@ function App() {
   ]);
   let [따봉, 따봉변경] = useState([0, 0, 0]);
   let [modal, setModal] = useState("false");
-  function modify() {
-    let copy = [...글제목];
-    copy = copy.sort();
-    글제목변경(copy);
-  }
+  let [title, setTitle] = useState(0);
 
   return (
     <div className="App">
@@ -28,7 +24,9 @@ function App() {
 
       <button
         onClick={() => {
-          modify;
+          let copy = [...글제목];
+          copy = copy.sort();
+          글제목변경(copy);
         }}
       >
         가나다수정렬
@@ -74,6 +72,7 @@ function App() {
             <h4
               onClick={() => {
                 setModal(!modal);
+                setTitle(i);
               }}
             >
               {글제목[i]}
@@ -93,7 +92,9 @@ function App() {
         );
       })}
 
-      {modal == true ? <Modal modify={modify} 글제목={글제목} /> : null}
+      {modal == true ? (
+        <Modal title={title} 글제목변경={글제목변경} 글제목={글제목} />
+      ) : null}
     </div>
   );
 }
@@ -101,16 +102,10 @@ function App() {
 function Modal(props) {
   return (
     <div className="modal">
-      <h4>{props.글제목[0]}</h4>
+      <h4>{props.글제목[props.title]}</h4>
       <p>날짜</p>
       <p>상세내용</p>
-      <button
-        onClick={() => {
-          props.modify;
-        }}
-      >
-        글수정
-      </button>
+      <button>글수정</button>
     </div>
   );
 }
