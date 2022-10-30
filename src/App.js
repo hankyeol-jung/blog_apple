@@ -15,6 +15,7 @@ function App() {
   let [따봉, 따봉변경] = useState([0, 0, 0]);
   let [modal, setModal] = useState("false");
   let [title, setTitle] = useState(0);
+  let [입력값, 입력값변경] = useState("");
 
   return (
     <div className="App">
@@ -41,30 +42,6 @@ function App() {
       >
         글수정
       </button>
-      {/* <div className="list">
-        <h4>
-          {글제목[0]}
-          <span
-            onClick={() => {
-              따봉변경(따봉 + 1);
-            }}
-          >
-            👍
-          </span>
-          {따봉}
-        </h4>
-        <p>2월 17일 발행</p>
-      </div>
-      <div className="list">
-        <h4
-          onClick={() => {
-            setModal(!modal);
-          }}
-        >
-          {글제목[2]}
-        </h4>
-        <p>2월 17일 발행</p>
-      </div> */}
 
       {글제목.map(function (a, i) {
         return (
@@ -77,7 +54,8 @@ function App() {
             >
               {글제목[i]}
               <span
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   let copy = [...따봉];
                   copy[i] = 따봉[i] + 1;
                   따봉변경(copy);
@@ -88,9 +66,29 @@ function App() {
               {따봉[i]}
             </h4>
             <p>2월 17일 발행</p>
+            <button
+              onClick={() => {
+                글제목.splice(i, 1);
+              }}
+            >
+              삭제
+            </button>
           </div>
         );
       })}
+
+      <input
+        onChange={(e) => {
+          입력값변경(e.target.value);
+        }}
+      />
+      <button
+        onClick={() => {
+          글제목.push(입력값);
+        }}
+      >
+        글쓰기
+      </button>
 
       {modal == true ? (
         <Modal title={title} 글제목변경={글제목변경} 글제목={글제목} />
