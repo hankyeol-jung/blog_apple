@@ -68,7 +68,9 @@ function App() {
             <p>2월 17일 발행</p>
             <button
               onClick={() => {
-                글제목.splice(i, 1);
+                let copy = [...글제목];
+                copy.splice(i, 1);
+                글제목변경(copy);
               }}
             >
               삭제
@@ -84,7 +86,9 @@ function App() {
       />
       <button
         onClick={() => {
-          글제목.push(입력값);
+          let copy = [...글제목];
+          copy.unshift(입력값);
+          글제목변경(copy);
         }}
       >
         글쓰기
